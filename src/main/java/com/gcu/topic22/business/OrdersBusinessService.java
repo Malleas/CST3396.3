@@ -33,6 +33,17 @@ public class OrdersBusinessService implements OrdersBusinessServiceInterface{
     }
 
     @Override
+    public OrderModel getOrderById(String id) {
+        System.out.println("Getting order " + id);
+        OrderEntity orderEntity = service.findById(id);
+        if (orderEntity == null) {
+            return null;
+        } else {
+            return new OrderModel(orderEntity.getId(), orderEntity.getOrderNo(), orderEntity.getProductName(), orderEntity.getPrice(), orderEntity.getQuantity());
+        }
+    }
+
+    @Override
     public void init() {
         System.out.println("Hello from OBS init()");
     }

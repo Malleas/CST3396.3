@@ -4,10 +4,10 @@ import com.gcu.topic22.model.OrderModel;
 import java.util.List;
 import com.gcu.topic22.model.OrdersList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -23,9 +23,26 @@ public class OrdersRestService {
     }
 
     @GetMapping(path = "/getXml", produces = {MediaType.APPLICATION_XML_VALUE})
-    public OrdersList getOrdersAsXml(){
+    public @ResponseBody OrdersList getOrdersAsXml(){
         OrdersList ordersList = new OrdersList();
         ordersList.setOrders(service.getOrders());
         return ordersList;
+    }
+    @GetMapping(path = "/getOrder/{id}")
+    public ResponseEntity<?> getOrder(@PathVariable("id") String id){
+        try {
+            OrderModel order = service.getOrderById(id);
+            if(order == null){
+                System.out.println("From not found");
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }else {
+                System.out.println("from success");
+                return new ResponseEntity<>(order, HttpStatus.OK);
+            }
+        }catch (Exception e){
+            System.out.println("From exception");
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

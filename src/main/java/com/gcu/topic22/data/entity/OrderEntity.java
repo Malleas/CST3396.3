@@ -1,23 +1,35 @@
 package com.gcu.topic22.data.entity;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
 
-@Table("ORDERS")
-public class OrderEntity {
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import java.io.Serializable;
+
+@Document(collection = "orders")
+public class OrderEntity implements Serializable {
     @Id
-    private long id;
-    @Column("ORDER_NO")
+    @XmlAttribute
+    private String id;
+
+    @Indexed(unique = true)
+    @XmlElement
     private String orderNo;
-    @Column("PRODUCT_NAME")
+
+    @Indexed(unique = true)
+    @XmlElement
     private String productName;
-    @Column("PRICE")
+
+    @XmlElement
     private float price;
-    @Column("QUANTITY")
+
+    @XmlElement
     private int quantity;
 
-    public OrderEntity(long id, String orderNo, String productName, float price, int quantity) {
+    public OrderEntity(String id, String orderNo, String productName, float price, int quantity) {
         this.id = id;
         this.orderNo = orderNo;
         this.productName = productName;
@@ -25,13 +37,11 @@ public class OrderEntity {
         this.quantity = quantity;
     }
 
-    public OrderEntity(){}
-
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -65,5 +75,16 @@ public class OrderEntity {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderEntity{" +
+                "id='" + id + '\'' +
+                ", orderNo='" + orderNo + '\'' +
+                ", productName='" + productName + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                '}';
     }
 }
