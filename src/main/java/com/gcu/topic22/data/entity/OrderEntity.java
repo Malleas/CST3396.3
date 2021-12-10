@@ -5,29 +5,21 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import java.io.Serializable;
 
 @Document(collection = "orders")
-public class OrderEntity implements Serializable {
+public class OrderEntity {
     @Id
-    @XmlAttribute
-    private String id;
+    String id;
 
     @Indexed(unique = true)
-    @XmlElement
-    private String orderNo;
+    String orderNo;
 
     @Indexed(unique = true)
-    @XmlElement
-    private String productName;
+    String productName;
 
-    @XmlElement
-    private float price;
+    float price;
 
-    @XmlElement
-    private int quantity;
+    int quantity;
 
     public OrderEntity(String id, String orderNo, String productName, float price, int quantity) {
         this.id = id;
@@ -75,16 +67,5 @@ public class OrderEntity implements Serializable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    @Override
-    public String toString() {
-        return "OrderEntity{" +
-                "id='" + id + '\'' +
-                ", orderNo='" + orderNo + '\'' +
-                ", productName='" + productName + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                '}';
     }
 }

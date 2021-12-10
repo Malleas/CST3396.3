@@ -2,7 +2,6 @@ package com.gcu.topic22.data;
 
 import com.gcu.topic22.data.entity.OrderEntity;
 import com.gcu.topic22.data.repository.OrdersRepository;
-import com.gcu.topic22.model.OrderModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,8 +37,15 @@ public class OrderDataService implements DataAccessInterface<OrderEntity>{
     }
 
     @Override
-    public boolean create(OrderEntity order) {
-       return true;
+    public boolean create(OrderEntity order){
+        String sql = "INSERT INTO ORDERS(ORDER_NO, PRODUCT_NAME, PRICE, QUANTITY) VALUES(?,?,?,?)";
+        try {
+            this.ordersRepository.save(order);
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     @Override

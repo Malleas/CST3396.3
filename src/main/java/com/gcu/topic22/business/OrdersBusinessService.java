@@ -21,15 +21,15 @@ public class OrdersBusinessService implements OrdersBusinessServiceInterface{
     @Override
     public List<OrderModel> getOrders() {
         System.out.println("Generating a list from getOrders()");
-        return service.findAll();
+        //return service.findAll();
       //  4.2 code
-      //  List<OrderEntity> ordersEntity = service.findAll();
-      //  List<OrderModel> ordersDomain = new ArrayList<>();
-      //  for(OrderEntity entity:ordersEntity){
-      //      ordersDomain.add(new OrderModel(entity.getId(), entity.getOrder_no(), entity.getProduct_name(),
-      //              entity.getPrice(), entity.getQuantity()));
-      //  }
-      //  return ordersDomain;
+        List<OrderEntity> ordersEntity = service.findAll();
+        List<OrderModel> ordersDomain = new ArrayList<>();
+        for(OrderEntity entity:ordersEntity){
+            ordersDomain.add(new OrderModel(entity.getId(), entity.getOrderNo(), entity.getProductName(),
+                    entity.getPrice(), entity.getQuantity()));
+        }
+        return ordersDomain;
     }
 
     @Override

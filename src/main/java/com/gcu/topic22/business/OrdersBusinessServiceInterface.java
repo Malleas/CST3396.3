@@ -8,7 +8,7 @@ public interface OrdersBusinessServiceInterface {
 
     public void test();
 
-    public List<OrderModel> getOrders();
+    public List getOrders();
 
     public OrderModel getOrderById(String id);
 
